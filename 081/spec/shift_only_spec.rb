@@ -12,4 +12,11 @@ describe 'bit shift' do
     a >>= 1 # 1
     expect(a & 1).to eq 1
   end
+
+  it "bit pos check" do
+    a = 6
+    expect(a[0]).to eq 0
+    expect(a[1]).to eq 1
+    expect(a[2]).to eq 1
+  end
 end
