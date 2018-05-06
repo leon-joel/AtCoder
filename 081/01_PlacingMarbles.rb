@@ -1,3 +1,2 @@
-sum = gets.chomp.chars.map(&:to_i).inject(:+)
-puts sum
-
+count = gets.chars.count("1")
+puts count
