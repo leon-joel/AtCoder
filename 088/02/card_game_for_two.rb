@@ -1,12 +1,10 @@
-_ = gets.chomp.to_i
+n = gets.chomp.to_i
 
-cards = gets.split.map(&:to_i)
-cards.sort!
+cards = gets.split.map(&:to_i).sort.reverse
 
-sum_a = 0
-sum_b = 0
-cards.reverse.each_slice(2) do |(a, b)|
-  sum_a += a
-  sum_b += (b || 0)
+sums = [0, 0]
+n.times do |i|
+   sums[i%2] += cards[i]
 end
-puts sum_a - sum_b
+
+puts sums[0] - sums[1]
