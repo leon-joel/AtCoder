@@ -23,36 +23,43 @@ end
 
 describe "main_test" do
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+5 2
+5 3 1 4 2
+1 3
+5 4
+  EOS_INPUT
 2
-3 1 2
-6 1 1
-  EOS_INPUT
-Yes
   EOS_EXPECTED
 
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-1
-2 100 100
+3 2
+3 2 1
+1 2
+2 3
   EOS_INPUT
-No
+3
   EOS_EXPECTED
 
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-2
-5 1 1
-100 1 1
+10 8
+5 3 6 8 7 10 9 1 2 4
+3 1
+4 1
+5 9
+2 5
+6 5
+3 5
+8 9
+7 9
   EOS_INPUT
-No
+8
   EOS_EXPECTED
 
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+5 1
+1 2 3 4 5
+1 5
+  EOS_INPUT
 5
-1 1 0
-102 101 1
-300 201 1
-4001 301 300
-10000 301 299
-  EOS_INPUT
-Yes
   EOS_EXPECTED
 end

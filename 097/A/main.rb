@@ -1,14 +1,11 @@
 def main
-  n = ARGF.gets.to_i
-  # puts("Error") if n <= 0
+  a, b, c, dist = ARGF.gets.split.map(&:to_i)
 
-  n.times do
-    t, x, y = ARGF.gets.split.map(&:to_i)
-
-
+  if (a-c).abs <= dist || ((a-b).abs <= dist && (b-c).abs <= dist)
+    puts 'Yes'
+  else
+    puts 'No'
   end
-
-  puts 'Yes'
 end
 
 if __FILE__ == $0

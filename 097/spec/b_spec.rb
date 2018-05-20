@@ -23,36 +23,93 @@ end
 
 describe "main_test" do
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-2
-3 1 2
-6 1 1
+10
   EOS_INPUT
-Yes
+9
   EOS_EXPECTED
 
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
 1
-2 100 100
   EOS_INPUT
-No
+1
+  EOS_EXPECTED
+
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+999
+  EOS_INPUT
+961
+  EOS_EXPECTED
+
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+9
+  EOS_INPUT
+9
   EOS_EXPECTED
 
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
 2
-5 1 1
-100 1 1
   EOS_INPUT
-No
+1
   EOS_EXPECTED
 
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-5
-1 1 0
-102 101 1
-300 201 1
-4001 301 300
-10000 301 299
+24
   EOS_INPUT
-Yes
+16
   EOS_EXPECTED
+
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+25
+  EOS_INPUT
+25
+  EOS_EXPECTED
+
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+26
+  EOS_INPUT
+25
+  EOS_EXPECTED
+
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+27
+  EOS_INPUT
+27
+  EOS_EXPECTED
+
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+28
+  EOS_INPUT
+27
+  EOS_EXPECTED
+
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+29
+  EOS_INPUT
+27
+  EOS_EXPECTED
+
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+30
+  EOS_INPUT
+27
+  EOS_EXPECTED
+
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+31
+  EOS_INPUT
+27
+  EOS_EXPECTED
+
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+32
+  EOS_INPUT
+32
+  EOS_EXPECTED
+
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+100
+  EOS_INPUT
+100
+  EOS_EXPECTED
+
 end
