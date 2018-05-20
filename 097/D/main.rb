@@ -1,84 +1,72 @@
-require 'pp'
-require 'set'
+class Node
+  attr_accessor :parent, :rank
 
-def find_group(groups, n)
-  groups.find do |g, _|
-    g.include? n
+  def initialize(n)
+    @parent = n
+    @rank = 0
+  end
+end
+
+class UnionFindTree
+  def initialize(n)
+    @nodes = (0..n).to_a.map { |i| Node.new(i) }
+  end
+
+  def find(x)
+    return x if @nodes[x].parent == x
+
+    @nodes[x].parent = find(@nodes[x].parent)
+  end
+
+  def unite(a, b)
+    a = find(a)
+    b = find(b)
+    return if a == b
+
+    if @nodes[a].rank < @nodes[b].rank
+      @nodes[a].parent = b
+    else
+      @nodes[b].parent = a
+      @nodes[a].rank += 1 if @nodes[a].rank == @nodes[b].rank
+    end
+  end
+
+  def same?(a, b)
+    find(a) == find(b)
   end
 end
 
 def main
-  _, m = ARGF.gets.split.map(&:to_i)
+  n, m = ARGF.gets.split.map(&:to_i)
   # puts("Error") if n <= 0
 
   seq = ARGF.gets.split.map(&:to_i)
   # pp seq
 
   # グループ分け
-  groups = []
+  nft = UnionFindTree.new(n)
   m.times do
-    pair = ARGF.gets.split.map(&:to_i)
-
-    # 所属グループを探す
-    g0 = find_group(groups, pair[0])
-    g1 = find_group(groups, pair[1])
-
-    if g0.nil? && g1.nil?
-      # どこにも属してない ➾ 新規groupを作る
-      groups << Set.new(pair)
-
-    elsif !g0.nil? && !g1.nil?
-      if g0 != g1
-        # 別々のgroupに所属している ➾ マージする
-        groups.delete(g1)
-        g0.merge(g1)
-      end
-      # 同じgroupに属している場合はなにもしない
-
-    elsif !g0.nil?
-      # pair0 だけがgroupに所属している ➾ pair1をgroupに追加
-      g0 << pair[1]
-    elsif !g1.nil?
-      g1 << pair[0]
-    else
-      puts "error"
-    end
+    p0, p1 = ARGF.gets.split.map(&:to_i)
+    nft.unite(p0, p1)
   end
-  # pp groups
-
-  #
-  groups_with_index =
-      groups.inject([]) do |groups_with_index, g|
-        groups_with_index << [g, []]
-      end
 
   match_num = 0
-  # index探し
   pos = 1
   seq.each do |num|
-    # groupを探す
-    g = find_group(groups_with_index, num)
-    if g.nil?
-      if num == pos
-        # グループに属していない && 既に所定の位置にある
-        match_num += 1
-      end
+    if num == pos
+      # 既に所定の位置にある場合は即インクリメント
+      match_num += 1
 
-    else
-      # グループに属している場合は、現在のposを記録しておく
-      g[1] << pos
+    elsif nft.same?(pos, num)
+      # pickした数字を所定の位置に持っていけるか？
+      # 現在のpos数 と pickした数字 が同じGroup なら持っていける
+      match_num += 1
     end
 
     pos += 1
   end
-  # pp groups_with_index
 
-  # union
-  groups_with_index.each do |(g, gpos)|
-    match_num += (g & gpos).size
-  end
   puts match_num
-
 end
 
 if __FILE__ == $0
