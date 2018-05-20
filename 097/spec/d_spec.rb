@@ -62,4 +62,13 @@ describe "main_test" do
   EOS_INPUT
 5
   EOS_EXPECTED
+
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+2 1
+1 2
+1 2
+  EOS_INPUT
+2
+  EOS_EXPECTED
+
 end
