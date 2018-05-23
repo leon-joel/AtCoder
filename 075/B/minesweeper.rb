@@ -8,38 +8,20 @@ class Grid
     @grid = []
   end
 
+  DIRS = [ [-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]].freeze
+
   def count_mine(r, c)
     cnt = 0
 
-    # 上のrow
-    if 1 <= r
-      row = @grid[r-1]
-      # 左
-      cnt += 1 if 1 <= c && row[c-1] == "#"
-      # 中
-      cnt += 1 if row[c] == "#"
-      # 右
-      cnt += 1 if c+1 < @w && row[c+1] == "#"
+    DIRS.each do |(dr, dc)|
+      cr = r + dr
+      cc = c + dc
+
+      next if cr < 0 || @h <= cr
+      next if cc < 0 || @w <= cc
+
+      cnt += 1 if @grid[cr][cc] == "#"
     end
-
-    # 下のrow
-    if r < @h-1
-      row = @grid[r+1]
-      # 左
-      cnt += 1 if 1 <= c && row[c-1] == "#"
-      # 中
-      cnt += 1 if row[c] == "#"
-      # 右
-      cnt += 1 if c+1 < @w && row[c+1] == "#"
-    end
-
-    # 自分のrow
-    row = @grid[r]
-    # 左
-    cnt += 1 if 1 <= c && row[c-1] == "#"
-    # 右
-    cnt += 1 if c+1 < @w && row[c+1] == "#"
-
     cnt
   end
 
