@@ -4,12 +4,7 @@ def main
   lower = [a, c].max
   upper = [b, d].min
 
-  intersect = upper - lower
-  if 0 <= intersect
-    puts intersect
-  else
-    puts 0
-  end
+  puts [0, upper - lower].max
 end
 
 if __FILE__ == $0
