@@ -1,13 +1,6 @@
 def main
-  str = ARGF.gets.chomp
-
-  n = str.to_i
-  digits = str.chars.map(&:to_i)
-
-  s = 0
-  digits.each do |d|
-    s += d
-  end
+  n = ARGF.gets.to_i
+  s = n.to_s.chars.map(&:to_i).inject(&:+)
 
   if n % s == 0
     puts 'Yes'
