@@ -23,76 +23,22 @@ end
 
 describe "main_test" do
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-10
-  EOS_INPUT
-1
-2
-3
-4
 5
-6
-7
-8
-9
-19
+3 2 4 1 2
+  EOS_INPUT
+2
   EOS_EXPECTED
 
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-20
+10
+10 71 84 33 6 47 23 25 52 64
   EOS_INPUT
-1
-2
-3
-4
-5
-6
-7
-8
-9
-19
-29
-39
-49
-59
-69
-79
-89
-99
-199
-299
+36
   EOS_EXPECTED
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-30
-  EOS_INPUT
-1
-2
-3
-4
-5
-6
 7
-8
-9
-19
-29
-39
-49
-59
-69
-79
-89
-99
-199
-299
-399
-499
-599
-699
-799
-899
-999
-1999
-2999
-3999
+1 2 3 1000000000 4 5 6
+  EOS_INPUT
+999999994
   EOS_EXPECTED
 end
