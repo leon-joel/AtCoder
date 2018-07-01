@@ -1,3 +1,9 @@
+def calc_diff_sum(nums, n)
+  nums.inject(0) do |s, i|
+    s += (i - n).abs
+  end
+end
+
 def main
 
   n = ARGF.gets.chomp.to_i
@@ -6,16 +12,30 @@ def main
   end
   # puts nums
 
-  ave = nums.inject(:+).to_f / nums.length
-  candidates = [ave.ceil, ave.floor].uniq
+  ave = (nums.inject(:+).to_f / nums.length).round
 
-  sunukes = candidates.map do |c|
-    nums.inject(0) do |d, i|
-      d += (i - c).abs
-    end
+  min_diff_sum = calc_diff_sum(nums, ave)
+
+  # 下向き
+  lower_limit = (10**5*2) * -1
+  (ave-1).downto(lower_limit) do |c|
+    ds = calc_diff_sum(nums, c)
+
+    break if min_diff_sum < ds
+
+    min_diff_sum = ds
   end
 
-  puts sunukes.min
+  upper_limit = 10**5*2
+  (ave+1).upto(upper_limit) do |c|
+    ds = calc_diff_sum(nums, c)
+
+    break if min_diff_sum < ds
+
+    min_diff_sum = ds
+  end
+
+  puts min_diff_sum
 
   # 6 5 4 3 2 1
   # 6 4 2 0 -2 -4

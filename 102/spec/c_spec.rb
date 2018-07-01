@@ -61,7 +61,7 @@ describe "main_test" do
 3
 1 2 1000000000
   EOS_INPUT
-1333333329
+     999999997
   EOS_EXPECTED
 
 end
