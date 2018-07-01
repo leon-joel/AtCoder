@@ -9,31 +9,18 @@ def main
   n = ARGF.gets.chomp.to_i
   nums = ARGF.gets.split.map.with_index do |s, idx|
     s.to_i - idx
-  end
+  end.sort
   # puts nums
 
-  ave = (nums.inject(:+).to_f / nums.length).round
+  candidates = if nums.length.odd?
+                 [nums[nums.length / 2]]
+               else
+                 nums[nums.length / 2 - 1, 2]
+               end
 
-  min_diff_sum = calc_diff_sum(nums, ave)
-
-  # 下向き
-  lower_limit = (10**5*2) * -1
-  (ave-1).downto(lower_limit) do |c|
-    ds = calc_diff_sum(nums, c)
-
-    break if min_diff_sum < ds
-
-    min_diff_sum = ds
-  end
-
-  upper_limit = 10**5*2
-  (ave+1).upto(upper_limit) do |c|
-    ds = calc_diff_sum(nums, c)
-
-    break if min_diff_sum < ds
-
-    min_diff_sum = ds
-  end
+  min_diff_sum = candidates.map do |c|
+    calc_diff_sum(nums, c)
+  end.min
 
   puts min_diff_sum
 
