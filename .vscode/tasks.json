@@ -8,17 +8,52 @@
       "type": "shell",
       "command": "msbuild",
       "args": [
-        // Ask msbuild to generate full paths for file names.
         "/property:GenerateFullPaths=true",
         "/t:build"
       ],
       "group": "build",
       "presentation": {
-        // Reveal the output only if unrecognized errors occur.
         "reveal": "silent"
       },
-      // Use the standard MS compiler pattern to detect errors, warnings and infos
       "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "buildgcc",
+      "command": "g++",
+      "type": "shell",
+      "presentation": {
+        "reveal": "always"
+      },
+      "args": [
+        "-std=c++11",
+        // "-m32",
+        "-g",
+        "-O0",
+        "-o",
+        "${workspaceFolder}/bin/a.out",
+        "${file}"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "buildgcc-O2",
+      "command": "g++",
+      "type": "shell",
+      "presentation": {
+        "reveal": "always"
+      },
+      "args": [
+        "-std=c++11",
+        // "-m32",
+        "-g",
+        "-O2",
+        "-o",
+        "${workspaceFolder}/bin/a.out",
+        "${file}"
+      ],
+      "group": "build",
+      "problemMatcher": []
     }
   ]
 }
