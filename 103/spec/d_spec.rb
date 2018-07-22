@@ -21,24 +21,52 @@ shared_examples "test_main" do |input, expected|
   end
 end
 
-describe "main_test" do
+describe "main_test0" do
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-5
-3 2 4 1 2
+5 2
+1 4
+2 5
+  EOS_INPUT
+1
+  EOS_EXPECTED
+end
+
+describe "main_test1" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+9 5
+1 8
+2 7
+3 5
+4 6
+7 9
   EOS_INPUT
 2
   EOS_EXPECTED
+end
 
+describe "main_test2" do
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-10
-10 71 84 33 6 47 23 25 52 64
+5 10
+1 2
+1 3
+1 4
+1 5
+2 3
+2 4
+2 5
+3 4
+3 5
+4 5
   EOS_INPUT
-36
+4
   EOS_EXPECTED
+end
+
+describe "main_test3" do
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-7
-1 2 3 1000000000 4 5 6
+2 1
+1 2
   EOS_INPUT
-999999994
+1
   EOS_EXPECTED
 end

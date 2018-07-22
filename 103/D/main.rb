@@ -1,32 +1,25 @@
 def main
-  n = ARGF.gets.chomp.to_i
-  nums = ARGF.gets.split.map(&:to_i)
+  _, req_num = ARGF.gets.split.map(&:to_i)
 
-  sum = nums.inject(&:+)
+  requests = []
+  req_num.times do
+    requests << ARGF.gets.split.map(&:to_i)
+  end
 
-  min_diff = 10**9
-  1.upto(nums.length - 3) do |c1|
-    r1_sum = nums.slice(0, c1).inject(&:+)
+  requests.sort_by! {|item| item[1]}
+  # puts requests
 
-    1.upto(nums.length - 2 - c1) do |c2|
-      r2_sum = nums.slice(c1, c2).inject(&:+)
-
-      1.upto(nums.length - 1 - c1 - c2) do |c3|
-        r3_sum = nums.slice(c1+c2, c3).inject(&:+)
-
-        r4_sum = sum - (r1_sum + r2_sum + r3_sum)
-
-        min, max = [r1_sum, r2_sum, r3_sum, r4_sum].minmax
-        d = max - min
-
-        if d < min_diff
-          min_diff = d
-        end
-      end
+  # 切断した場所 例）1の場合、1-2 の間を切断したという意味
+  last = 0
+  cnt = 0
+  requests.each do |(a, b)|
+    if last < a
+      last = b - 1
+      cnt += 1
     end
   end
 
-  puts min_diff
+  puts cnt
 end
 
 if __FILE__ == $0
