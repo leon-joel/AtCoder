@@ -1,22 +1,27 @@
 def main
-  _, req_num = ARGF.gets.split.map(&:to_i)
+  islands_num, req_num = ARGF.gets.split.map(&:to_i)
 
-  requests = []
+  # ソートしない解法 ※islands_num分のArrayを最初から用意しておくだけ
+  # ※ソートする解法と比べて 229ms -> 192ms と速くなったが、12664kb->15740kb とメモリー使用量は増えた
+  requests = Array.new(islands_num) {Array.new}
   req_num.times do
-    requests << ARGF.gets.split.map(&:to_i)
+    req = ARGF.gets.split.map(&:to_i)
+    # 配列indexは0始まりである点に注意
+    requests[req[1]-1] << req
   end
-
-  requests.sort_by! {|item| item[1]}
-  # puts requests
 
   # 切断した場所 例）1の場合、1-2 の間を切断したという意味
   last = 0
-  cnt = 0
-  requests.each do |(a, b)|
-    if last < a
-      last = b - 1
-      cnt += 1
+  cnt = requests.inject(0) do |cnt, rs|
+    if 0 < rs.size
+      rs.each do |req|
+        if last < req[0]
+          last = req[1] - 1
+          cnt += 1
+        end
+      end
     end
+    cnt
   end
 
   puts cnt

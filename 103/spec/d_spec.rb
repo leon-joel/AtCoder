@@ -62,6 +62,24 @@ describe "main_test2" do
   EOS_EXPECTED
 end
 
+describe "main_test4" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+5 10
+1 3
+3 4
+1 4
+1 5
+2 3
+2 5
+1 2
+3 5
+4 5
+2 4
+  EOS_INPUT
+4
+  EOS_EXPECTED
+end
+
 describe "main_test3" do
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
 2 1
