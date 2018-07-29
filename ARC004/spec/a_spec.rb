@@ -1,6 +1,6 @@
 require 'rspec'
 require 'active_support/core_ext/kernel/reporting'  # to suppress warning
-require_relative "../A/main"
+require_relative "../a"
 
 shared_examples "test_main" do |input, expected|
   it do
@@ -17,7 +17,10 @@ shared_examples "test_main" do |input, expected|
     # $stdin = stdin_org
     $stdout = stdout_org
 
-    expect(output).to eq expected
+    # 整数比較
+    # expect(output).to eq expected
+    # 浮動小数比較
+    expect((output.to_f - expected.to_f).abs < 0.000001).to be_truthy
   end
 end
 
@@ -78,64 +81,12 @@ describe "main_test" do
 4.242641
   EOS_EXPECTED
 
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-# 1 4 3
-#   EOS_INPUT
-# 1
-#   EOS_EXPECTED
-#
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-# 0 2 3
-#   EOS_INPUT
-# 1
-#   EOS_EXPECTED
-#
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-# 1 2 3
-#   EOS_INPUT
-# 0
-#   EOS_EXPECTED
-#
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-# 0 1000000000000000000 1000000000000000000
-#   EOS_INPUT
-# 2
-#   EOS_EXPECTED
-
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-# 28
-#   EOS_INPUT
-# 27
-#   EOS_EXPECTED
-#
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-# 29
-#   EOS_INPUT
-# 27
-#   EOS_EXPECTED
-#
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-# 30
-#   EOS_INPUT
-# 27
-#   EOS_EXPECTED
-#
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-# 31
-#   EOS_INPUT
-# 27
-#   EOS_EXPECTED
-#
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-# 32
-#   EOS_INPUT
-# 32
-#   EOS_EXPECTED
-#
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-# 100
-#   EOS_INPUT
-# 100
-#   EOS_EXPECTED
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+2
+0 0
+0 0
+  EOS_INPUT
+0.000000
+  EOS_EXPECTED
 
 end

@@ -1,13 +1,6 @@
-class Point
-  attr_reader :x, :y
-
-  def initialize(x, y)
-    @x = x
-    @y = y
-  end
-
+XY = Struct.new(:x, :y) do
   def calc_square_distance_to(point)
-    (point.x - @x)**2 + (point.y - @y)**2
+    (point.x - x)**2 + (point.y - y)**2
   end
 end
 
@@ -22,27 +15,25 @@ def main
   #
   # ざっくり 1億回≒1秒 なので、
   # この計算量だと全検索でも余裕
-  #
 
-  n = ARGF.gets.to_i
+  _ = ARGF.gets.chomp.to_i
 
-  points = []
   max_sqr_dist = 0
-  n.times do |i|
-    x, y = ARGF.gets.split.map(&:to_i)
-    # puts "(#{x}, #{y})"
-    p = Point.new(x, y)
+  points = []
+  while s = ARGF.gets
+    point = XY.new(*s.split.map(&:to_i))
 
-    points.each do |p1|
-      sqr_dist = p.calc_square_distance_to(p1)
+    points.each do |p|
+      sqr_dist = point.calc_square_distance_to(p)
       if max_sqr_dist < sqr_dist
         max_sqr_dist = sqr_dist
       end
     end
 
-    points << p
+    points << point
   end
-  puts Math.sqrt(max_sqr_dist)
+
+  puts Math.sqrt max_sqr_dist
 end
 
 if __FILE__ == $0
