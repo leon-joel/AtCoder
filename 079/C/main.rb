@@ -1,26 +1,40 @@
 def calc(lhs, op, rhs)
-  if op == '+'
+  # opが0なら加算
+  if op == 0
     lhs + rhs
   else
     lhs - rhs
   end
 end
 
+def to_op(bit)
+  if bit == 0
+    '+'
+  else
+    '-'
+  end
+end
+
+# オーバーキル気味だが、bitDPで実装してみる
+# ★生成される数式が違うので通らないUnitTestがある点に注意
+BIT_NUM = 3
+
 def main
   nums = ARGF.gets.chars.map(&:to_i)
 
-  ['+', '-'].each do |op1|
-    ['+', '-'].each do |op2|
-      ['+', '-'].each do |op3|
-        a = calc(nums[0], op1, nums[1])
-        a = calc(a, op2, nums[2])
-        a = calc(a, op3, nums[3])
+  # bit mask の生成
+  0.upto((1 << BIT_NUM) - 1) do |mask|
 
-        if a == 7
-          puts "#{nums[0]}#{op1}#{nums[1]}#{op2}#{nums[2]}#{op3}#{nums[3]}=7"
-          return
-        end
-      end
+    a = nums[0]
+    # 各bitを下から舐める
+    0.upto(BIT_NUM - 1)  do |i|
+      # 加算 or 減算
+      a = calc(a, mask[i], nums[i+1])
+    end
+
+    if a == 7
+      puts "#{nums[0]}#{to_op(mask[0])}#{nums[1]}#{to_op(mask[1])}#{nums[2]}#{to_op(mask[2])}#{nums[3]}=7"
+      return
     end
   end
 
