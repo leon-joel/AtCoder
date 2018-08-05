@@ -5,24 +5,11 @@ R = 1
 U = 2
 L = 3
 
-def to_dir_str(d)
-  case d
-  when D then "D"
-  when R then "R"
-  when U then "U"
-  when L then "L"
-  else "ERROR!!!"
-  end
-end
-
 # D,R,U,L のベクトル、およびその方向の逆
 DIRS = [ [1, 0, U],
          [0, 1, L],
          [-1, 0, D],
          [0, -1, R] ]
-
-# [D, R, U, L] に対して、右折した方向
-DIRS2 = [L, D, R, U]
 
 # グリッド範囲外？
 def is_ob(h, w, r, c)
@@ -78,20 +65,8 @@ def main
       cell = grid[r][c]
       next if cell == 1
 
-      # スペースがある各方向に進み、
-      # 進んだセルの右折方向にどれだけスペースがあるかを加算していく
-      cell.each_with_index do |ds, dir|
-        sr = r
-        sc = c
-        ds.times do
-          sr += DIRS[dir][0]
-          sc += DIRS[dir][1]
-          a = grid[sr][sc][DIRS2[dir]]
-          ans += a
-
-          # puts "(#{r},#{c}) => #{to_dir_str(dir)} (#{sr},#{sc}) : #{a}"
-        end
-      end
+      # 右折点を考えて、 (U + D) * (L + R) が始点終点の組数
+      ans += (cell[U] + cell[D]) * (cell[L] + cell[R])
     end
   end
 
