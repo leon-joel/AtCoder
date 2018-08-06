@@ -1,61 +1,66 @@
 # require 'pp'
 
-D = 0
-R = 1
-U = 2
-L = 3
-
-# D,R,U,L のベクトル、およびその方向の逆
-DIRS = [ [1, 0, U],
-         [0, 1, L],
-         [-1, 0, D],
-         [0, -1, R] ]
-
-# グリッド範囲外？
-def is_ob(h, w, r, c)
-  r < 0 || h <= r || c < 0 || w <= c
-end
-
 def main
   height, width = ARGF.gets.split.map(&:to_i)
 
   grid = []
   height.times do |r|
-    row = ARGF.gets&.chomp&.chars.map.with_index do |ch, c|
-      # 下・右・上・左 方向の壁までの距離（隣が壁なら0）
-      ch == "#" ? 1 : [height-r-1, width-c-1, r, c]
+    s = 0
+    row = ARGF.gets.chars.map do |ch|
+      if ch == "#"
+        s = 0
+        1
+      else
+        # 左右のスペース数, 上下のスペース数
+        # ※左のスペース数は読み込み時に格納しておく
+        row = [s, 0]
+        s += 1
+        row
+      end
     end
     grid << row
   end
-  # pp grid
-  # grid[h][w]
 
-  # 各セルから4方向にどれだけスペースが続いているかを調べる
+  # 右・上・左 方向の壁or障害物までの距離（隣が壁なら0）
   0.upto height-1 do |r|
-    0.upto width-1 do |c|
-      next if grid[r][c] != 1
-
-      DIRS.each do |(dr, dc, rdir, _)|
-        sr = r
-        sc = c
-
-        dist = 0
-        loop do
-          sr += dr
-          sc += dc
-
-          # 範囲外なら次の方向に
-          break if is_ob(height, width, sr, sc)
-          # 障害物が出てきたら次の方向に
-          cell = grid[sr][sc]
-          break if cell == 1
-
-          cell[rdir] = dist
-          dist += 1
-        end
+    s = 0
+    (width-1).downto 0 do |c|
+      cell = grid[r][c]
+      if cell == 1
+        s = 0   # スペース数をリセット
+      else
+        cell[0] += s
+        s += 1
       end
     end
   end
+
+  0.upto width-1 do |c|
+    s = 0
+    0.upto height-1 do |r|
+      cell = grid[r][c]
+      if cell == 1
+        s = 0   # スペース数をリセット
+      else
+        cell[1] += s
+        s += 1
+      end
+    end
+  end
+
+  0.upto width-1 do |c|
+    s = 0
+    (height-1).downto 0 do |r|
+      cell = grid[r][c]
+      if cell == 1
+        s = 0   # スペース数をリセット
+      else
+        cell[1] += s
+        s += 1
+      end
+    end
+  end
+
   # pp grid
 
   ans = 0
@@ -65,8 +70,9 @@ def main
       cell = grid[r][c]
       next if cell == 1
 
-      # 右折点を考えて、 (U + D) * (L + R) が始点終点の組数
-      ans += (cell[U] + cell[D]) * (cell[L] + cell[R])
+      # 右折点を中心に考えて、
+      # (上下のスペース数) * (左右のスペース数) が始点終点の順序対の数
+      ans += cell[0] * cell[1]
     end
   end
 

@@ -226,6 +226,7 @@ describe "main_test4" do
   EOS_EXPECTED
 end
 
+# describe "main_test5", skip: true do
 describe "main_test5" do
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
 1000 1000
