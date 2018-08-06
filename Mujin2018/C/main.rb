@@ -12,7 +12,8 @@ def main
         nil
       else
         # 左のスペース数をカウントアップしながらセットしておく
-        cell = [s, 0]
+        # [ 左右のスペース, 上のスペース, 下のスペース]
+        cell = [s, 0, 0]
         s += 1
         cell
       end
@@ -46,51 +47,26 @@ def main
     grid[r] = row
   end
 
-  # pp grid
-
-  # 右・上・左 方向の壁or障害物までの距離（隣が壁なら0）
-  # 0.upto height-1 do |r|
-  #   s = 0
-  #   (width-1).downto 0 do |c|
-  #     cell = grid[r][c]
-  #     if cell.nil?
-  #       s = 0   # スペース数をリセット
-  #     else
-  #       cell[0] += s
-  #       s += 1
-  #     end
-  #   end
-  # end
-
-  # 0.upto width-1 do |c|
-  #   s = 0
-  #   0.upto height-1 do |r|
-  #     cell = grid[r][c]
-  #     if cell.nil?
-  #       s = 0   # スペース数をリセット
-  #     else
-  #       cell[1] += s
-  #       s += 1
-  #     end
-  #   end
-  # end
-
   ans = 0
 
-  0.upto width-1 do |c|
-    s = 0
-    (height-1).downto 0 do |r|
-      cell = grid[r][c]
-      if cell.nil?
-        s = 0   # スペース数をリセット
-      else
-        cell[1] += s
-        s += 1
+  # 下からのスペースをカウントアップ
+  (height-1).downto 0 do |r|
+    row = grid[r]
+    lower_row = grid[r+1]
+    0.upto width-1 do |c|
+      cell = row[c]
+      next if cell.nil?
 
-        # 右折点を中心に考えて、
-        # (上下のスペース数) * (左右のスペース数) が始点終点の順序対の数
-        ans += cell[0] * cell[1]
+      if !lower_row.nil?
+        lower_cell = lower_row[c]
+        if !lower_cell.nil?
+          cell[2] = lower_cell[2] + 1
+        end
       end
+
+      # 右折点を中心に考えて、
+      # (左右のスペース数) * (上下のスペース数)が始点終点の順序対の数
+      ans += cell[0] * (cell[1] + cell[2])
     end
   end
   # pp grid
