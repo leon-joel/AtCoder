@@ -48,6 +48,8 @@ def main
     end
   end
 
+  ans = 0
+
   0.upto width-1 do |c|
     s = 0
     (height-1).downto 0 do |r|
@@ -57,24 +59,14 @@ def main
       else
         cell[1] += s
         s += 1
+
+        # 右折点を中心に考えて、
+        # (上下のスペース数) * (左右のスペース数) が始点終点の順序対の数
+        ans += cell[0] * cell[1]
       end
     end
   end
-
   # pp grid
-
-  ans = 0
-
-  0.upto height-1 do |r|
-    0.upto width-1 do |c|
-      cell = grid[r][c]
-      next if cell == 1
-
-      # 右折点を中心に考えて、
-      # (上下のスペース数) * (左右のスペース数) が始点終点の順序対の数
-      ans += cell[0] * cell[1]
-    end
-  end
 
   puts ans
 end
