@@ -30,6 +30,19 @@ def main
       end
     end
 
+    # 上からのスペース数をカウントアップ
+    if 0 < r
+      upper_row = grid[r-1]
+      0.upto width-1 do |c|
+        cell = row[c]
+        next if cell.nil?
+        upper_cell = upper_row[c]
+        next if upper_cell.nil?
+
+        cell[1] = upper_cell[1] + 1
+      end
+    end
+
     grid[r] = row
   end
 
@@ -49,18 +62,18 @@ def main
   #   end
   # end
 
-  0.upto width-1 do |c|
-    s = 0
-    0.upto height-1 do |r|
-      cell = grid[r][c]
-      if cell.nil?
-        s = 0   # スペース数をリセット
-      else
-        cell[1] += s
-        s += 1
-      end
-    end
-  end
+  # 0.upto width-1 do |c|
+  #   s = 0
+  #   0.upto height-1 do |r|
+  #     cell = grid[r][c]
+  #     if cell.nil?
+  #       s = 0   # スペース数をリセット
+  #     else
+  #       cell[1] += s
+  #       s += 1
+  #     end
+  #   end
+  # end
 
   ans = 0
 
