@@ -34,12 +34,9 @@ def main
     if 0 < r
       upper_row = grid[r-1]
       0.upto width-1 do |c|
-        cell = row[c]
-        next if cell.nil?
-        upper_cell = upper_row[c]
-        next if upper_cell.nil?
-
-        cell[1] = upper_cell[1] + 1
+        if row[c] && upper_row[c]
+          row[c][1] = upper_row[c][1] + 1
+        end
       end
     end
 
