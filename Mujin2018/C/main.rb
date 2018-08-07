@@ -22,11 +22,11 @@ def main
     # 右からのスペース数をカウントアップ
     s = 0
     row.reverse_each do |cell|
-      if cell.nil?
-        s = 0   # スペース数をリセット
-      else
+      if cell
         cell[0] += s
         s += 1
+      else
+        s = 0   # スペース数をリセット
       end
     end
 
@@ -51,18 +51,18 @@ def main
     lower_row = grid[r+1]
     0.upto width-1 do |c|
       cell = row[c]
-      next if cell.nil?
-
-      if !lower_row.nil?
-        lower_cell = lower_row[c]
-        if !lower_cell.nil?
-          cell[2] = lower_cell[2] + 1
+      if cell
+        if lower_row
+          lower_cell = lower_row[c]
+          if lower_cell
+            cell[2] = lower_cell[2] + 1
+          end
         end
-      end
 
-      # 右折点を中心に考えて、
-      # (左右のスペース数) * (上下のスペース数)が始点終点の順序対の数
-      ans += cell[0] * (cell[1] + cell[2])
+        # 右折点を中心に考えて、
+        # (左右のスペース数) * (上下のスペース数)が始点終点の順序対の数
+        ans += cell[0] * (cell[1] + cell[2])
+      end
     end
   end
   # pp grid
