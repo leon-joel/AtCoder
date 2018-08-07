@@ -1,4 +1,4 @@
-require 'pp'
+# require 'pp'
 
 def main
   height, width = ARGF.gets.split.map(&:to_i)
@@ -21,8 +21,7 @@ def main
 
     # 右からのスペース数をカウントアップ
     s = 0
-    (width-1).downto 0 do |c|
-      cell = row[c]
+    row.reverse_each do |cell|
       if cell.nil?
         s = 0   # スペース数をリセット
       else
