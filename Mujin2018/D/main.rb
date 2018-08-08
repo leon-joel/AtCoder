@@ -1,32 +1,73 @@
+def rev(value)
+  value.to_s.reverse.to_i
+end
+
+def process(x, y)
+  y = rev(y)
+
+  if x < y
+    y = y - x
+  else
+    x = x - y
+  end
+
+  # 常に x >= y となるように入れ替える
+  x, y = y, x if x < y
+  [x, y]
+end
+# begin_x, begin_y は 常に x >= y となるように与えられる
+# success: すでに条件を満たすことがわかっている(x,y)
+# fails: すでに条件を満たさないことがわかっている
+def gojohou(bx, by, success, fails)
+  xy = [bx, by]
+  xy_ary = []
+  loop do
+    # すでに失敗することがわかっている？
+    break if fails.include?(xy)
+
+    # すでに登場している？
+    if xy_ary.find_index(xy)
+      success.merge(xy_ary)
+      return true
+    end
+
+    # すでに条件を満たすことがわかっている？
+    if success.include?(xy)
+      success.merge(xy_ary)
+      return true
+    end
+
+    # 未知の組み合わせだった
+    xy_ary << xy
+
+    xy = process(*xy)
+    break if xy[0] < 10 || xy[1] < 10
+  end
+  fails.merge(xy_ary)
+  false
+end
+
 def main
-  n = ARGF.gets.chomp.to_i
-  nums = ARGF.gets.split.map(&:to_i)
+  lim_x, lim_y = ARGF.gets.split.map(&:to_i)
+  lim_x, lim_y = lim_y, lim_x if lim_x < lim_y
 
-  sum = nums.inject(&:+)
+  cnt = 0
 
-  min_diff = 10**9
-  1.upto(nums.length - 3) do |c1|
-    r1_sum = nums.slice(0, c1).inject(&:+)
-
-    1.upto(nums.length - 2 - c1) do |c2|
-      r2_sum = nums.slice(c1, c2).inject(&:+)
-
-      1.upto(nums.length - 1 - c1 - c2) do |c3|
-        r3_sum = nums.slice(c1+c2, c3).inject(&:+)
-
-        r4_sum = sum - (r1_sum + r2_sum + r3_sum)
-
-        min, max = [r1_sum, r2_sum, r3_sum, r4_sum].minmax
-        d = max - min
-
-        if d < min_diff
-          min_diff = d
-        end
+  # 10未満は調べない ※lim_xがbeginより下の場合は1度も回らない
+  success = Set.new
+  fails = Set.new
+  10.upto(lim_y) do |y|
+    y.upto(lim_x) do |x|
+      if success.include?([x, y])
+        cnt += 1
+        next
       end
+
+      cnt += 1 if gojohou(x, y, success, fails)
     end
   end
 
-  puts min_diff
+  puts cnt
 end
 
 if __FILE__ == $0

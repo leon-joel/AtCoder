@@ -21,24 +21,52 @@ shared_examples "test_main" do |input, expected|
   end
 end
 
-describe "main_test" do
+describe "main_test0" do
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-5
-3 2 4 1 2
+    13 13
   EOS_INPUT
-2
-  EOS_EXPECTED
-
-  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-10
-10 71 84 33 6 47 23 25 52 64
-  EOS_INPUT
-36
-  EOS_EXPECTED
-  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-7
-1 2 3 1000000000 4 5 6
-  EOS_INPUT
-999999994
+    1
   EOS_EXPECTED
 end
+
+describe "main_test1" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+    20 30
+  EOS_INPUT
+    28
+  EOS_EXPECTED
+end
+
+describe "main_test2" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+    314 159
+  EOS_INPUT
+    1915
+  EOS_EXPECTED
+end
+
+describe "main_test3" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+    1 1
+  EOS_INPUT
+    0
+  EOS_EXPECTED
+end
+
+describe "main_test999" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+    999 999
+  EOS_INPUT
+    40032
+  EOS_EXPECTED
+end
+
+
+# describe "misc" do
+#   it do
+#     10.upto(1) do |x|
+#       puts x
+#     end
+#   end
+# end
+#
