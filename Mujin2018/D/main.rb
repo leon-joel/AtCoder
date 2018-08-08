@@ -81,7 +81,7 @@ def main
 
   # success, fail を表す grid map を作る
   grid = Grid.new(1000, 1000)
-  # 10未満は調べない ※lim_xがbeginより下の場合は1度も回らない
+  # 10未満は調べない
   10.upto(lim_y) do |y|
     10.upto(lim_x) do |x|
       if gojohou(x, y, grid)
