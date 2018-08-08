@@ -1,9 +1,12 @@
+XY = Struct.new(:x, :y)
+
 def rev(value)
   value.to_s.reverse.to_i
 end
 
-def process(x, y)
-  y = rev(y)
+def process(xy)
+  x = xy.x
+  y = rev(xy.y)
 
   if x < y
     y = y - x
@@ -12,58 +15,63 @@ def process(x, y)
   end
 
   # 常に x >= y となるように入れ替える
-  x, y = y, x if x < y
-  [x, y]
+  if x < y
+    XY.new(y, x)
+  else
+    XY.new(x, y)
+  end
 end
+
 # begin_x, begin_y は 常に x >= y となるように与えられる
 # success: すでに条件を満たすことがわかっている(x,y)
-# fails: すでに条件を満たさないことがわかっている
-def gojohou(bx, by, success, fails)
-  xy = [bx, by]
+def gojohou(org_xy, success, failed)
+  xy = org_xy
   xy_ary = []
   loop do
-    # すでに失敗することがわかっている？
-    break if fails.include?(xy)
+    break if xy.x < 10 || xy.y < 10
+    # break if x == 0 || y == 0
+
+    # 失敗することがわかっている
+    break if failed.find_index(xy)
 
     # すでに登場している？
     if xy_ary.find_index(xy)
-      success.merge(xy_ary)
+      success << org_xy
       return true
     end
 
-    # すでに条件を満たすことがわかっている？
-    if success.include?(xy)
-      success.merge(xy_ary)
-      return true
-    end
-
-    # 未知の組み合わせだった
     xy_ary << xy
 
-    xy = process(*xy)
-    break if xy[0] < 10 || xy[1] < 10
+    # すでに条件を満たすことがわかっている？
+    if success.find_index(xy)
+      success << org_xy
+      return true
+    end
+
+    xy = process(xy)
   end
-  fails.merge(xy_ary)
+  failed << org_xy
   false
 end
 
 def main
   lim_x, lim_y = ARGF.gets.split.map(&:to_i)
-  lim_x, lim_y = lim_y, lim_x if lim_x < lim_y
 
   cnt = 0
 
   # 10未満は調べない ※lim_xがbeginより下の場合は1度も回らない
-  success = Set.new
-  fails = Set.new
+  success = []
+  failed = []
   10.upto(lim_y) do |y|
-    y.upto(lim_x) do |x|
-      if success.include?([x, y])
+    10.upto(lim_x) do |x|
+      xy = x < y ? XY.new(y, x) : XY.new(x, y)
+      if success.find_index(xy)
         cnt += 1
         next
       end
+      next if failed.find_index(xy)
 
-      cnt += 1 if gojohou(x, y, success, fails)
+      cnt += 1 if gojohou(xy, success, failed)
     end
   end
 
