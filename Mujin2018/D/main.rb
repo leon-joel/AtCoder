@@ -29,7 +29,7 @@ def gojohou(org_xy, success, failed)
 
     # ループした？
     if xy_ary.find_index(xy)
-      success << org_xy
+      # success << org_xy
       return true
     end
 
@@ -38,7 +38,7 @@ def gojohou(org_xy, success, failed)
     # すでに条件を満たすことがわかっている？
     if success.find_index(xy)
       # success.concat(xy_ary)
-      success << org_xy
+      # success << org_xy
       return true
     end
 
@@ -49,7 +49,7 @@ def gojohou(org_xy, success, failed)
 
     xy = process(*xy)
   end
-  failed << org_xy
+  # failed << org_xy
   false
 end
 
