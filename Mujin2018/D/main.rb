@@ -22,28 +22,18 @@ end
 
 # grid: nil=未調査 1=OK  0:NG
 def gojohou(bx, by, grid)
-  ox, oy = bx, by
-  ox, oy = oy, ox if ox < oy
-  x, y = ox, oy
+  x, y = bx, by
+  x, y = y, x if x < y
   xy_ary = []
   loop do
     if x < 10 || y < 10
       break
     end
-    # break if x == 0 || y == 0
-
-    # ループした？
-    if xy_ary.find_index([x, y])
-      grid.set(ox, oy, 1)
-      return true
-    end
-
-    xy_ary << [x, y]
-
     v = grid.get(x, y)
     if !v.nil?
       # すでに条件を満たすことがわかっている？
       if v == 1
+        grid.set_ary(xy_ary, 1)
         return true
       end
 
@@ -53,9 +43,16 @@ def gojohou(bx, by, grid)
       end
     end
 
+    xy_ary << [x, y]
     x, y = process(x, y)
+
+    # ループした？
+    if xy_ary.find_index([x, y])
+      grid.set_ary(xy_ary, 1)
+      return true
+    end
   end
-  grid.set(ox, oy, 0)
+  grid.set_ary(xy_ary, 0)
   false
 end
 
@@ -68,6 +65,12 @@ class Grid
   end
   def get(x, y)
     @grid[x][y]
+  end
+
+  def set_ary(ary, value)
+    ary.each do |(x, y)|
+      @grid[x][y] = value
+    end
   end
 end
 
@@ -82,6 +85,7 @@ def main
   10.upto(lim_y) do |y|
     10.upto(lim_x) do |x|
       if gojohou(x, y, grid)
+        # puts "#{x}, #{y}"
         cnt += 1
       end
     end
