@@ -3,7 +3,11 @@ def rev(value)
 end
 
 def process(x, y)
-  y = rev(y)
+  if x < y
+    x = rev(x)
+  else
+    y = rev(y)
+  end
 
   if x < y
     y = y - x
@@ -12,42 +16,42 @@ def process(x, y)
   end
 
   # 常に x >= y となるように入れ替える
-  x, y = y, x if x < y
+  # x, y = y, x if x < y
   [x, y]
 end
 
-# begin_x, begin_y は 常に x >= y となるように与えられる
-# success: すでに条件を満たすことがわかっている(x,y)
-def gojohou(org_xy, success, failed)
-  xy = org_xy.clone
+# grid: nil=未調査 1=OK  0:NG
+def gojohou(bx, by, grid)
+  x = bx
+  y = by
   xy_ary = []
   loop do
-    if xy[0] < 10 || xy[1] < 10
+    if x < 10 || y < 10
       break
     end
     # break if x == 0 || y == 0
 
     # ループした？
-    if xy_ary.find_index(xy)
-      # success << org_xy
+    if xy_ary.find_index([x, y])
       return true
     end
 
-    xy_ary << xy
+    xy_ary << [x, y]
 
     # すでに条件を満たすことがわかっている？
-    if success.find_index(xy)
-      # success.concat(xy_ary)
-      # success << org_xy
-      return true
+    v = grid[x][y]
+    if !v.nil?
+      if v == 1
+        return true
+      end
+
+      # 条件を満たさないことがわかっている？
+      if v == 0
+        break
+      end
     end
 
-    # 条件を満たさないことがわかっている？
-    if failed.find_index(xy)
-      break
-    end
-
-    xy = process(*xy)
+    x, y = process(x, y)
   end
   # failed << org_xy
   false
@@ -58,22 +62,16 @@ def main
 
   cnt = 0
 
+  # success, fail を表す grid map を作る
+  grid = Array.new(1000) { Array.new(1000) }
   # 10未満は調べない ※lim_xがbeginより下の場合は1度も回らない
-  success = []
-  failed = []
   10.upto(lim_y) do |y|
     10.upto(lim_x) do |x|
-      xy = x < y ? [y, x] : [x, y]
-      if success.find_index(xy)
+      if gojohou(x, y, grid)
+        grid[x][y] = 1
         cnt += 1
-        next
-      end
-      if failed.find_index(xy)
-        next
-      end
-      if gojohou(xy, success, failed)
-        cnt += 1
-        next
+      else
+        grid[x][y] = 0
       end
     end
   end
