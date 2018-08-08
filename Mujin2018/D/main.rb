@@ -1,12 +1,9 @@
-XY = Struct.new(:x, :y)
-
 def rev(value)
   value.to_s.reverse.to_i
 end
 
-def process(xy)
-  x = xy.x
-  y = rev(xy.y)
+def process(x, y)
+  y = rev(y)
 
   if x < y
     y = y - x
@@ -15,26 +12,22 @@ def process(xy)
   end
 
   # 常に x >= y となるように入れ替える
-  if x < y
-    XY.new(y, x)
-  else
-    XY.new(x, y)
-  end
+  x, y = y, x if x < y
+  [x, y]
 end
 
 # begin_x, begin_y は 常に x >= y となるように与えられる
 # success: すでに条件を満たすことがわかっている(x,y)
 def gojohou(org_xy, success, failed)
-  xy = org_xy
+  xy = org_xy.clone
   xy_ary = []
   loop do
-    break if xy.x < 10 || xy.y < 10
+    if xy[0] < 10 || xy[1] < 10
+      break
+    end
     # break if x == 0 || y == 0
 
-    # 失敗することがわかっている
-    break if failed.find_index(xy)
-
-    # すでに登場している？
+    # ループした？
     if xy_ary.find_index(xy)
       success << org_xy
       return true
@@ -44,11 +37,17 @@ def gojohou(org_xy, success, failed)
 
     # すでに条件を満たすことがわかっている？
     if success.find_index(xy)
+      # success.concat(xy_ary)
       success << org_xy
       return true
     end
 
-    xy = process(xy)
+    # 条件を満たさないことがわかっている？
+    if failed.find_index(xy)
+      break
+    end
+
+    xy = process(*xy)
   end
   failed << org_xy
   false
@@ -64,14 +63,18 @@ def main
   failed = []
   10.upto(lim_y) do |y|
     10.upto(lim_x) do |x|
-      xy = x < y ? XY.new(y, x) : XY.new(x, y)
+      xy = x < y ? [y, x] : [x, y]
       if success.find_index(xy)
         cnt += 1
         next
       end
-      next if failed.find_index(xy)
-
-      cnt += 1 if gojohou(xy, success, failed)
+      if failed.find_index(xy)
+        next
+      end
+      if gojohou(xy, success, failed)
+        cnt += 1
+        next
+      end
     end
   end
 
