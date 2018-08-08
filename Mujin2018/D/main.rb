@@ -25,8 +25,8 @@ def gojohou(bx, by, grid)
   x, y = bx, by
   x, y = y, x if x < y
   xy_ary = []
-  loop do
-    if x < 10 || y < 10
+  while true
+    if y < 10
       break
     end
     v = grid.get(x, y)
