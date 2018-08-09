@@ -9,16 +9,16 @@ def main
   b_ary = Array.new(s.length, 0)
   a_ary = Array.new(s.length, 0)
 
-  q_num = 0
+  q_num = 1
   0.upto(s.length) do |i|
     case s[i]
     when 'A','B'
       c_ary[i] = c_ary[i-1]
     when 'C'
-      c_ary[i] = (c_ary[i-1] + 3**q_num) % DIV_NUM
+      c_ary[i] = (c_ary[i-1] + q_num) % DIV_NUM
     when '?'
-      c_ary[i] = (c_ary[i-1] * 3 + 3**q_num) % DIV_NUM
-      q_num += 1
+      c_ary[i] = (c_ary[i-1] * 3 + q_num) % DIV_NUM
+      q_num = (q_num * 3) % DIV_NUM
     end
   end
   # pp c_ary
