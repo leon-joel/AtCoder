@@ -112,3 +112,31 @@ describe "main_test8" do
 2
   EOS_EXPECTED
 end
+
+describe "main_test9" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+2 1600
+5 1000
+3 500
+  EOS_INPUT
+6
+  EOS_EXPECTED
+end
+
+describe "main_test10" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+10 5400
+5 1000
+3 500
+5 1000
+3 500
+5 1000
+3 500
+5 1000
+3 500
+5 1000
+3 500
+  EOS_INPUT
+5
+  EOS_EXPECTED
+end
