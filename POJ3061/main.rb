@@ -1,11 +1,13 @@
 require 'pp'
 
+def gets; ARGF.gets; end
+
 def main
-  q_num = ARGF.gets.to_i
+  q_num = gets.to_i
 
   q_num.times do
-    nums_len, target = ARGF.gets.split.map(&:to_i)
-    nums = ARGF.gets.split.map(&:to_i)
+    nums_len, target = gets.split.map(&:to_i)
+    nums = gets.split.map(&:to_i)
 
     # 最短区間長
     min_len = nums_len + 1
