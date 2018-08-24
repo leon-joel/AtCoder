@@ -1,14 +1,16 @@
 require 'pp'
 
+def gets; ARGF.gets; end
+
 # しゃくとり法
 # https://qiita.com/drken/items/ecd1a472d3a0e7db8dce
 # http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_C&lang=jp
 
 def main
-  nums_len, q_len = ARGF.gets.split.map(&:to_i)
+  nums_len, q_len = gets.split.map(&:to_i)
 
-  nums = ARGF.gets.split.map(&:to_i)
-  q_nums = ARGF.gets.split.map(&:to_i)
+  nums = gets.split.map(&:to_i)
+  q_nums = gets.split.map(&:to_i)
 
   q_nums.each do |q|
     ans = 0
