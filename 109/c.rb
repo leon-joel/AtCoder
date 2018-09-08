@@ -1,3 +1,5 @@
+def gets; ARGF.gets; end
+
 module ArrayRefinement
   refine Array do
     # 配列に対する最小公倍数
@@ -12,5 +14,20 @@ module ArrayRefinement
   end
 end
 
-# 使用法: トップレベルに以下の行を入れる
-# using ArrayRefinement
+using ArrayRefinement
+
+def main
+
+  n, x = gets.split.map(&:to_i)
+
+  nums = gets.split.map do |s|
+    i = s.to_i
+    i - x
+  end
+
+  puts nums.gcd.abs
+end
+
+if __FILE__ == $0
+  main
+end
