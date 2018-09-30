@@ -5,7 +5,9 @@ class Point
     @x = x
     @y = y
   end
-
+  def to_s
+    "(#{x},#{y})"
+  end
   def calc_square_distance_to(point)
     (point.x - @x)**2 + (point.y - @y)**2
   end
