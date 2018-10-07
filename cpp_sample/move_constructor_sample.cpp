@@ -57,10 +57,20 @@ Bar baz_not_move()
     // std::moveをつけないようにすると、コンパイラによるNRVO最適化により
     return ret;                     // moveすら発生しない！
 }
+void qux(Bar&& iBar)
+{
+    std::cout << "qux()          : iBar.mFoo=" << iBar.mFoo << "\n";
 
+    // ★★★右辺値参照が【左辺値】であることの確認！！！
+    Bar aBar(std::move(iBar));  // aBarへムーブするとムーブ・コンストラクタが走る
+    // Bar aBar(iBar);          // ★重要★ aBarへコピーしようとしてもコピー・コンストラクタはないのでエラー
+
+    std::cout << "qux()          : aBar.mFoo=" << aBar.mFoo << "\n";
+}    
 int main()
 {
     // Bar aBar=baz();
-    Bar aBar=baz_not_move();
-    std::cout << "post baz()     : mFoo=" << aBar.mFoo << "\n";
+    qux(baz_not_move());
+
+    // std::cout << "post baz()     : mFoo=" << aBar.mFoo << "\n";
 }                                   // aBarデストラクト（ここで①のFooデストラクト）
