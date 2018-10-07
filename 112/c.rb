@@ -17,7 +17,7 @@ def judge(cx, cy, ch, points)
         return nil
       end
     else
-      if ch < d
+      if d < ch
         return nil
       end
     end
@@ -28,12 +28,12 @@ end
 def puts_ans(x, y, h)
   puts "#{x} #{y} #{h}"
 end
-MAX_SIZE = 101
+MAX_INDEX = 100
 
 def main
   n = gets.chomp.to_i
 
-  grid = Array.new(MAX_SIZE) {Array.new(MAX_SIZE)}
+  grid = Array.new(MAX_INDEX+1) {Array.new(MAX_INDEX+1)}
 
   points = []
   n.times do |i|
@@ -48,9 +48,9 @@ def main
   points.reverse!
 
   # グリッドの全セルをなめて、中心条件を満たすものを探す
-  0.upto(MAX_SIZE-1) do |x|
+  0.upto(MAX_INDEX) do |x|
     line = grid[x]
-    0.upto(MAX_SIZE-1) do |y|
+    0.upto(MAX_INDEX) do |y|
       h = line[y]
       next if h == 0
 
