@@ -6,11 +6,11 @@ class   Foo
 public:
     Foo(int iData) : mData(iData)
     {
-        std::cout << "Foo::Foo()     : this=" << this << "\n";
+        std::cout << "Foo::Foo(" << mData << ")     : this=" << this << "\n";
     }
     ~Foo()
     {
-        std::cout << "Foo::~Foo()    : this=" << this << "\n";
+        std::cout << "Foo::~Foo(" << mData << ")    : this=" << this << "\n";
     }
 };
  
@@ -57,6 +57,19 @@ Bar baz_not_move()
     // std::moveをつけないようにすると、コンパイラによるNRVO最適化により
     return ret;                     // moveすら発生しない！
 }
+
+Bar baz_not_nvro(){
+    std::cout << "baz()\n";
+    Bar r1(new Foo(456));
+    Bar r2(new Foo(789));
+
+    std::cout << "return from baz\n";
+
+    if ((long)(&r1) % 2 == 0)
+      return r1;
+    else
+      return r2;
+}
 void qux(Bar&& iBar)
 {
     std::cout << "qux()          : iBar.mFoo=" << iBar.mFoo << "\n";
@@ -70,7 +83,8 @@ void qux(Bar&& iBar)
 int main()
 {
     // Bar aBar=baz();
-    qux(baz_not_move());
+    // qux(baz_not_move());
+    qux(baz_not_nvro());
 
     // std::cout << "post baz()     : mFoo=" << aBar.mFoo << "\n";
 }                                   // aBarデストラクト（ここで①のFooデストラクト）
