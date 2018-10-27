@@ -34,11 +34,12 @@ def main
   front_gen = pop_front_gen(nums)
   back_gen = pop_back_gen(nums)
 
+  # 中央値からスタート
+  last_num = nums[n / 2]
+
   # 先頭（最小値）から取るパターン
   len_min_first = 0
-  # めんどくさいから最初の1つだけ取っておく
-  last_num = front_gen.resume
-  1.upto(n-1) do |i|
+  0.upto(n-2) do |i|
     cur_num = if i.even?
                 # 前を取る
                 front_gen.resume
@@ -47,16 +48,19 @@ def main
                 back_gen.resume
               end
     len_min_first += (last_num - cur_num).abs
+    last_num = cur_num
   end
+
+  front_gen = pop_front_gen(nums)
+  back_gen = pop_back_gen(nums)
+
+  # 中央値からスタート
+  last_num = nums[n / 2]
 
   # 末尾（最大値）から取るパターン
   len_max_first = 0
-  # めんどくさいから最初の1つだけ取っておく
-  front_gen = pop_front_gen(nums)
-  back_gen = pop_back_gen(nums)
-  last_num = back_gen.resume
   1.upto(n-1) do |i|
-    cur_num = if i.odd?
+    cur_num = if i.even?
                 # 前を取る
                 front_gen.resume
               else
@@ -64,11 +68,11 @@ def main
                 back_gen.resume
               end
     len_max_first += (last_num - cur_num).abs
+    last_num = cur_num
   end
 
   puts [len_min_first, len_max_first].max
 end
-
 
 if __FILE__ == $0
   main
