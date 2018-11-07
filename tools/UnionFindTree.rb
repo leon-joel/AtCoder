@@ -8,6 +8,7 @@ class Node
 end
 
 class UnionFindTree
+  # 0 から n まで（計 n+1個）のNodeを作る
   def initialize(n)
     @nodes = (0..n).to_a.map { |i| Node.new(i) }
   end
