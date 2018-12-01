@@ -23,84 +23,71 @@ end
 
 describe "main_test0" do
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-18
-DWANGOMEDIACLUSTER
-1
-18
+4 2
+2 5 2 5
   EOS_INPUT
-1
+12
   EOS_EXPECTED
 end
 
 describe "main_test1" do
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-18
-DDDDDDMMMMMCCCCCCC
-1
-18
+8 4
+9 1 8 2 7 5 6 4
   EOS_INPUT
-210
+32
   EOS_EXPECTED
 end
 
 describe "main_test2" do
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-54
-DIALUPWIDEAREANETWORKGAMINGOPERATIONCORPORATIONLIMITED
-3
-20 30 40
+3 2
+1000000000 1 999999999
   EOS_INPUT
-0
-1
-2
+1000000000
   EOS_EXPECTED
 end
 
 describe "main_test3" do
   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-30
-DMCDMCDMCDMCDMCDMCDMCDMCDMCDMC
-4
-5 10 15 20
+6 5
+1000000000 999999999 999999998 999999997 999999996 999999995
   EOS_INPUT
-10
-52
-110
-140
+2722104818
   EOS_EXPECTED
 end
 
-describe "main_test4" do
-  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-3
-CMD
-1
-3
-  EOS_INPUT
-0
-  EOS_EXPECTED
-end
-
-describe "main_test5" do
-  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-3
-ABZ
-1
-3
-  EOS_INPUT
-0
-  EOS_EXPECTED
-end
-
-describe "main_test6" do
-  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-3
-MDC
-3
-3 2 1
-  EOS_INPUT
-0
-0
-0
-  EOS_EXPECTED
-end
+# describe "main_test4" do
+#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+# 3
+# CMD
+# 1
+# 3
+#   EOS_INPUT
+# 0
+#   EOS_EXPECTED
+# end
+#
+# describe "main_test5" do
+#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+# 3
+# ABZ
+# 1
+# 3
+#   EOS_INPUT
+# 0
+#   EOS_EXPECTED
+# end
+#
+# describe "main_test6" do
+#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+# 3
+# MDC
+# 3
+# 3 2 1
+#   EOS_INPUT
+# 0
+# 0
+# 0
+#   EOS_EXPECTED
+# end
