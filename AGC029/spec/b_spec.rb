@@ -66,14 +66,15 @@ describe "main_test4" do
   EOS_EXPECTED
 end
 
-# describe "main_test5" do
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-# atCoder
-#   EOS_INPUT
-# WA
-#   EOS_EXPECTED
-# end
-#
+describe "main_test5" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+3
+1000000000 1 999999999
+  EOS_INPUT
+0
+  EOS_EXPECTED
+end
+
 # describe "main_test6" do
 #   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
 # AtccodwC
