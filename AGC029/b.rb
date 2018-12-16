@@ -21,22 +21,24 @@ def beki(n)
   1 << pos
 end
 
-def pop_max_num(nums, max_num)
-  max_num.downto(1) do |i|
-    cnt = nums.fetch(i, nil)
-    next if cnt.nil? || cnt == 0
+def pop_max_num(nums)
+  k, cnt = nums.shift
+  return nil if k == 0  # 要素なし の場合はdefault値が返ってくる
 
-    nums[i] -= 1
-    return i
+  if 2 <= cnt
+    nums[k] = cnt-1
   end
-  nil
+  k
 end
 
 def find_and_pop_num(nums, n)
-  return nil if nums[n] == 0
+  cnt = nums[n]
+  return nil if cnt == 0
 
-  if 1 <= nums[n]
+  if 2 <= cnt
     nums[n] -= 1
+  else
+    nums.delete(n)
   end
   n
 end
@@ -44,20 +46,21 @@ end
 def main
   n = gets.chomp.to_i
 
-  max_num = 0
-  nums = gets.split.each_with_object(Hash.new(0)) do |c, h|
-    i = c.to_i
-    max_num = i if max_num < i
+  nums_ary = gets.split.map(&:to_i)
+  nums_ary.sort!
+  nums_ary.reverse!
+  # puts nums_ary
+
+  nums = nums_ary.each_with_object(Hash.new(0)) do |i, h|
     h[i] += 1
   end
   # puts nums
-  # puts max_num
 
   ans = 0
   while true
     # 大きい方からxを取り出す
-    max_num = x = pop_max_num(nums, max_num)
-    break if max_num.nil?
+    x = pop_max_num(nums)
+    break if x.nil?
 
     # x に対する相方yを探す
     # y <= x なので、
