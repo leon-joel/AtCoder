@@ -75,10 +75,47 @@ describe "main_test5" do
   EOS_EXPECTED
 end
 
-# describe "main_test6" do
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-# AtccodwC
-#   EOS_INPUT
-# WA
-#   EOS_EXPECTED
-# end
+describe "main_test6" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+3
+4 4 4
+  EOS_INPUT
+1
+  EOS_EXPECTED
+end
+
+describe "main_test7" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+2
+3 1
+  EOS_INPUT
+1
+  EOS_EXPECTED
+end
+
+describe "main_test8" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+8
+1 2 4 8 16 32 64 128
+  EOS_INPUT
+0
+  EOS_EXPECTED
+end
+
+describe "main_test9" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+9
+536870912 536870912 536870912 536870911 1 1 1000000000 73741824 1
+  EOS_INPUT
+4
+  EOS_EXPECTED
+end
+
+describe "main_test10" do
+  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+6
+1 3 5 5 11 11
+  EOS_INPUT
+3
+  EOS_EXPECTED
+end

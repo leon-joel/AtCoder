@@ -22,13 +22,15 @@ def beki(n)
 end
 
 def pop_max_num(nums)
-  k, cnt = nums.shift
-  return nil if k == 0  # 要素なし の場合はdefault値が返ってくる
+  n, cnt = nums.first
+  return nil if n.nil?
 
   if 2 <= cnt
-    nums[k] = cnt-1
+    nums[n] = cnt-1
+  else
+    nums.delete(n)
   end
-  k
+  n
 end
 
 def find_and_pop_num(nums, n)
