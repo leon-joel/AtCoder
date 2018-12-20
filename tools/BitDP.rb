@@ -1,5 +1,6 @@
 # bit DPのサンプル
 # ARC061 C問題より
+# https://arc061.contest.atcoder.jp/tasks/arc061_a
 
 def main
   s = ARGF.gets.chomp
@@ -9,11 +10,12 @@ def main
 
   sum = 0
   # bit mask の生成
-  0.upto((1 << bit_num) - 1) do |mask|
+  # 2^n     = 1 << n
+  0.upto((1 << n) - 1) do |mask|
     last_idx = 0
 
     # 各bitを下から舐める
-    0.upto(bit_num-1) do |i|
+    0.upto(n-1) do |i|
 
       # iビット目が立っているかどうか
       if mask[i] == 1
@@ -24,6 +26,7 @@ def main
         last_idx = i+1
       end
     end
+    # 残り全部
     last_part = s.slice(last_idx..-1)
     # puts last_part
     sum += last_part.to_i
