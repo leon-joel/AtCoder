@@ -53,13 +53,13 @@ describe "main_test2" do
   EOS_EXPECTED
 end
 
-describe "main_test3" do
-  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
-0
-  EOS_INPUT
-ABC
-  EOS_EXPECTED
-end
+# describe "main_test3" do
+#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+# 0
+#   EOS_INPUT
+# ABC
+#   EOS_EXPECTED
+# end
 
 # describe "main_test4" do
 #   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp

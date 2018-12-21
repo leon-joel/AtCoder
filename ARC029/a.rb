@@ -1,17 +1,17 @@
 require 'pp'
 
+def gets; ARGF.gets; end
+
 def main
   num = ARGF.gets.to_i
 
-  meats = []
+  meats = Array.new(num)
   num.times do |i|
-    meats << ARGF.gets.to_i
+    meats[i] = gets.to_i
   end
   # pp meats
 
-  total_time = meats.inject(0) do |sum, t|
-    sum + t
-  end
+  total_time = meats.inject(0, :+)
   # pp total_time
 
   min_sum = 200
