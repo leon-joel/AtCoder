@@ -13,7 +13,7 @@ shared_examples "test_main" do |input, expected|
     end
     $stdout = StringIO.new
     main
-    output = $stdout.string.chomp
+    output = $stdout.string
     # $stdin = stdin_org
     $stdout = stdout_org
 
@@ -22,7 +22,7 @@ shared_examples "test_main" do |input, expected|
 end
 
 describe "main_test0" do
-  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+  it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 5 3
 10
 15
@@ -35,7 +35,7 @@ describe "main_test0" do
 end
 
 describe "main_test1" do
-  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+  it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 5 3
 5
 7
@@ -48,7 +48,7 @@ describe "main_test1" do
 end
 
 describe "main_test2" do
-  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+  it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 3 2
 3
 2
@@ -59,7 +59,7 @@ describe "main_test2" do
 end
 
 describe "main_test3" do
-  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+  it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 3 2
 1
 1
@@ -70,7 +70,7 @@ describe "main_test3" do
 end
 
 describe "main_test4" do
-  it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+  it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 4 3
 1
 1
@@ -82,7 +82,7 @@ describe "main_test4" do
 end
 #
 # describe "main_test5" do
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+#   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 # 18
 # 1 1 1 1 2 1 2 3 2 2 3 3 3 3 3 3 3 3
 # EOS_INPUT
@@ -91,7 +91,7 @@ end
 # end
 
 # describe "main_test6" do
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+#   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 # 2 5
 # 1 3
 #   EOS_INPUT
@@ -100,7 +100,7 @@ end
 # end
 #
 # describe "main_test7" do
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+#   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 # 1 3
 # 1
 #   EOS_INPUT
@@ -109,7 +109,7 @@ end
 # end
 
 # describe "main_test8" do
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+#   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 # 2 300
 # 5 1000
 # 3 500
@@ -119,7 +119,7 @@ end
 # end
 #
 # describe "main_test9" do
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+#   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 # 2 1600
 # 5 1000
 # 3 500
@@ -129,7 +129,7 @@ end
 # end
 #
 # describe "main_test10" do
-#   it_behaves_like "test_main", <<~EOS_INPUT.chomp, <<~EOS_EXPECTED.chomp
+#   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 # 10 5400
 # 5 1000
 # 3 500
