@@ -8,104 +8,123 @@ class Solver
   def main
     n, m = gets.split.map(&:to_i)
 
-    # 中心ラインの 2x2矩形 を線形に保持する
-    @c_grid = Array.new((n-1) * 3 + 1)
+    # n^2 <= 10^10 なのでグリッドを保持できない
 
-    # 外側はHashで保持する (x, y) => c
-    # ※ただし、y < x 側のみ格納
-    @o_hash = Hash.new
+    # マス情報は MAX50000件なのでHashで保持する [x, y] => c
+
+    # 対角線上
+    @d_h = Hash.new
+    # 対角線以外
+    @o_h = Hash.new
 
     m.times do
       x, y, c = gets.split.map(&:to_i)
       x -= 1
       y -= 1
-      if (x - y).abs <= 1
-        # 中心ライン
-        @c_grid[x * 2 + y] = c
+      xy = [x, y]
+
+      if x == y
+        # 対角線
+        @d_h[x] = c
       else
-        # 外側ハッシュはy<x 側に変換して格納
-        xy = if y <= x
-               [x, y]
-             else
-               [y, x]
-             end
-
-        o_c = @o_hash[xy]
-        if o_c.nil?
-          @o_hash[xy] = c
-        elsif o_c != c
-          # 既に格納されていて矛盾がある場合は即return 0
-          return puts 0
-        end
+        # 対角線以外
+        @o_h[xy] = c
       end
     end
-    # pp @grid
+    # pp @d_h
+    # pp @o_h
 
-    # 中心ラインで確定する色を埋めていく
-    # 2x2矩形で 左上点 からスキャンしていく
-    0.upto(n-2) do |i|
-      c22 = @c_grid[i*3, 4]
-      nil_cnt = c22.count(nil)
-      next if nil_cnt == 4
+    # 対角線から右側の幅2 のセル情報 ※両サイドの和
+    @i_h = Hash.new
 
-      if nil_cnt == 0
-        cnt_1 = c22.count(1)
-        if cnt_1 != 4 && cnt_1 != 2 && cnt_1 != 0
-          return puts 0
-        end
+    b_cnt = 0
+    s_cnt = 0
+    @o_h.each do |(x, y), c|
+      # 逆サイド
+      yx = [y, x]
+      c_yx = @o_h[yx]
 
-      elsif nil_cnt == 1
-        # 埋めていくのは 1-1-1 or 0-0-0 のみ
-        case c22
-        when [1, 1, 1, nil] then @c_grid[i*3 + 3] = 1
-        when c22 == [1, 1, nil, 1] then @c_grid[i*3 + 2] = 1
-        when c22 == [1, nil, 1, 1] then @c_grid[i*3 + 1] = 1
-        when c22 == [nil, 1, 1, 1] then @c_grid[i*3 + 0] = 1
-        when c22 == [0, 0, 0, nil] then @c_grid[i*3 + 3] = 0
-        when c22 == [0, 0, nil, 0] then @c_grid[i*3 + 2] = 0
-        when c22 == [0, nil, 0, 0] then @c_grid[i*3 + 1] = 0
-        when c22 == [nil, 0, 0, 0] then @c_grid[i*3 + 0] = 0
+      if !c_yx.nil?
+        b_cnt += 1
+        # 両側指定だった場合
+        if 3 <= (x - y).abs
+          # 外側だった
+          # 値が異なる＝矛盾 -> 即Return
+          return puts 0 if c != c_yx
+
+          # 値が同じ -> 何もしない
         else
-          # nilが1個でこれ以外のパターンはNG
-          return puts 0
+          # 内側だった
+          xy = (x <= y) ? [x, y] : [y, x]
+          if c == c_yx
+            # 値が同じ -> 0
+            @i_h[xy] = 0
+          else
+            # 値が異なる -> 1
+            @i_h[xy] = 1
+          end
+        end
+      else
+        s_cnt += 1
+        # 片側だけ指定だった
+        # 内側の場合=>もう片方の選択により1にも0にもでき一意に決まるので何もしない
+        # 外側の場合⇒何もしない（自動的に反対側も一意に決まるので）
+      end
+    end
+
+    ans = 0
+    # bitDPで対角線上のセル値パターンをすべて列挙する
+    # ★この方法ではパターン数が 2^n になり、TLE確実…
+
+    # bit mask の生成
+    # 2^n     = 1 << n
+    0.upto((1 << n) - 1) do |mask|
+      # 対角線上制約にマッチしている？
+      is_fail = false
+      @d_h.each do |i, c|
+        next if c.nil?
+        if mask[i] != c
+          is_fail = true
+          break
         end
       end
-    end
+      next if is_fail
 
-    ans = 1
-
-    # 中心ラインのパターン数
-    c22 = @c_grid[0, 4]
-    cnt_nil = c22.count(nil)
-    case cnt_nil
-    when 1 then return puts -1  # ありえない
-    when 4 then ans = ans * 8 % MOD_NUM
-    when 3 then ans = ans * 4 % MOD_NUM
-    when 2 then ans = ans * 2 % MOD_NUM
-    end
-
-    1.upto(n-2) do |i|
-      c22 = @c_grid[i*3, 4]
-      cnt_nil = c22.count(nil)
-      cnt_1 = c22.count(1)
-      case cnt_nil
-      when 1 then return puts -1  # ありえない
-      when 4 then ans = ans * 4 % MOD_NUM
-      when 3 then ans = ans * 2 % MOD_NUM
-      when 2 then ans = ans * 1 % MOD_NUM
+      # 対角線周辺制約にマッチしている？
+      @i_h.each do |(x, y), c|
+        if y - x == 1
+          # a + b = c ?
+          if c == 1
+            is_fail = true if mask[x] == mask[y]
+          elsif c == 0
+            is_fail = true if mask[x] != mask[y]
+          else
+            return puts -2 # バグ
+          end
+        elsif y - x == 2
+          # b = c ?
+          is_fail = true if mask[x+1] != c
+        else
+          return puts -1 # バグ
+        end
+        break if is_fail
       end
+      next if is_fail
+
+      # ここまで来る＝この対角線上のセルパターンはOKだった
+      ans += 1
     end
 
-    # 外側のパターン数 = 2^(外側[片側]のセル数 - ハッシュに格納されている数)
-    # 外側[片側]のセル数
-    o_num = (n - 2) * (n - 1) / 2
-    o_free_num = o_num - @o_hash.length
-    o_free_num.times do |i|
+    # 対角線の片側で考えて
+    # 両側どちらにも値が入っていないセル数＝対角線の片側セル数 - どちらかに値が入っているセル数
+    v_cnt = n * (n - 1) / 2 - (s_cnt + b_cnt / 2)
+    # puts "#{s_cnt}, #{b_cnt}, #{v_cnt}"
+    # 2^v_cnt をの最後の答えに掛ける
+    v_cnt.times do
       ans = ans * 2 % MOD_NUM
     end
 
     puts ans
-
   end
 end
 

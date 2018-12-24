@@ -85,7 +85,7 @@ describe "main_test0-4x1" do
 2 1 1
 2 2 0
   EOS_INPUT
-0
+1
   EOS_EXPECTED
 end
 describe "main_test0-5o" do
@@ -108,16 +108,16 @@ describe "main_test0-5i" do
 3 1 1
 1 3 1
   EOS_INPUT
-32
+16
   EOS_EXPECTED
 end
-describe "main_test0-5x" do
+describe "main_test0-5i2" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 3 2
 3 1 0
 1 3 1
   EOS_INPUT
-0
+16
   EOS_EXPECTED
 end
 
