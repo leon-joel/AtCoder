@@ -7,27 +7,24 @@ class Solver
     n = gets.chomp.to_i
 
     # D/M数, DM組数を累積和で保持する ★i番目の前までの和 を格納する
-    d_accum = Array.new(n)
-    m_accum = Array.new(n)
-    dm_accum = Array.new(n)
     d_sum = 0
     m_sum = 0
     dm_sum = 0
     s = Array.new(n)
+    # [ [c, d_sum, m_sum, dm_sum] ... ]
     gets.chomp.each_char.with_index do |c, i|
-      d_accum[i] = d_sum
-      m_accum[i] = m_sum
-      dm_accum[i] = dm_sum
       case c
       when 'D'
-        s[i] = 1
+        s[i] = [1, d_sum, m_sum, dm_sum]
         d_sum += 1
       when 'M'
-        s[i] = 2
+        s[i] = [2, d_sum, m_sum, dm_sum]
         m_sum += 1
         dm_sum += d_sum
       when 'C'
-        s[i] = 3
+        s[i] = [3, d_sum, m_sum, dm_sum]
+      else
+        s[i] = [0, d_sum, m_sum, dm_sum]
       end
     end
     # pp d_accum
@@ -49,14 +46,17 @@ class Solver
       # 右端のindexをインクリメントしていく
       2.upto(n-1) do |r|
         # 左端
-        if s[r] == 3 #'C'
+        ra = s[r]
+        if ra[0] == 3 #'C'
           l = r - sect_len if 0 <= r - sect_len
+          la = s[l]
           # dm_r = dm_accum[r]
           # dm_l = dm_accum[l]
           # d_l = d_accum[l]
           # m_r = m_accum[r]
           # m_l = m_accum[l]
-          ans += dm_accum[r] - dm_accum[l] - d_accum[l] * (m_accum[r] - m_accum[l])
+          # ans += dm_accum[r] - dm_accum[l] - d_accum[l] * (m_accum[r] - m_accum[l])
+          ans += ra[3] - la[3] - la[1] * (ra[2] - la[2])
         end
       end
 
