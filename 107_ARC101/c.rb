@@ -22,23 +22,18 @@ class Solver
       r_dist = r_pos.abs
       l_dist = l_pos.abs
 
-      if r_pos <= 0
-        # 全部負の位置
-        min_dist = l_dist if l_dist < min_dist
-      elsif 0 <= l_pos
-        # 全部正の位置
-        min_dist = r_dist if r_dist < min_dist
+      # 両端のキャンドル間の距離は必ず歩くので
+      dist = r_pos - l_pos
+
+      # 0に近い方の端までの距離を加算
+      if r_dist <= l_dist
+        # 右端のほうが近い
+        dist += r_dist
       else
-        # 0またぎ
-        if 0 < r_pos + l_pos
-          # 右のほうが遠い
-          d = l_dist * 2 + r_dist
-        else
-          # 左のほうが遠い
-          d = r_dist * 2 + l_dist
-        end
-        min_dist = d if d < min_dist
+        dist += l_dist
       end
+
+      min_dist = dist if dist < min_dist
     end
 
     puts min_dist
