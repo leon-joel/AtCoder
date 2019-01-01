@@ -13,9 +13,8 @@ shared_examples "test_main" do |input, expected|
     end
     $stdout = StringIO.new
     # KnapsackDPSolver.new.main
-    KnapsackDPSolver2.new.main
-    # AllSearchSolver.new.main
-    # MemoizeRecursive.new.main
+    # KnapsackDPSolver2.new.main
+    MemoizeRecursive.new.main
     output = $stdout.string
     # $stdin = stdin_org
     $stdout = stdout_org

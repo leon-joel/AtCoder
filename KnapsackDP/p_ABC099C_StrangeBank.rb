@@ -5,24 +5,30 @@ def gets; ARGF.gets; end
 # Strange Bank
 # https://atcoder.jp/contests/abc099/tasks/abc099_c
 
+def scan_input
+  upper_w = gets.chomp.to_i
+
+  # 品物（引き出し単位金額）のリストを生成
+  items = []
+  w = 1
+  while w <= upper_w
+    items << w
+    w *= 6
+  end
+  w = 9
+  while w <= upper_w
+    items << w
+    w *= 9
+  end
+  # pp items
+
+  [upper_w, items]
+end
+
 # 個数制限なしナップサックDP
 class KnapsackDPSolver
   def main
-    upper_w = gets.chomp.to_i
-
-    # 品物（引き出し単位金額）のリストを生成
-    items = []
-    w = 1
-    while w <= upper_w
-      items << w
-      w *= 6
-    end
-    w = 9
-    while w <= upper_w
-      items << w
-      w *= 9
-    end
-    # pp items
+    upper_w, items = scan_input
 
     n = items.length
 
@@ -66,21 +72,7 @@ end
 # ★1次元DP配列で実装するパターン
 class KnapsackDPSolver2
   def main
-    upper_w = gets.chomp.to_i
-
-    # 品物（引き出し単位金額）のリストを生成
-    items = []
-    w = 1
-    while w <= upper_w
-      items << w
-      w *= 6
-    end
-    w = 9
-    while w <= upper_w
-      items << w
-      w *= 9
-    end
-    # pp items
+    upper_w, items = scan_input
 
     n = items.length
 
@@ -104,7 +96,44 @@ class KnapsackDPSolver2
   end
 end
 
+# メモ探索風（＝再帰関数のメモ化）での実装
+# ★Qiitaに載っている実装だとStackLevelTooDeepになってしまう。
+#   （1円引き出すたびに再帰が入るので…。C++だと大丈夫のようだ。）
+#   理論的な裏付けはないが、この実装では6/9各シリーズのrest内最大金額だけを探索するようにした。
+class MemoizeRecursive
+  SIXES = [1, 6, 36, 216, 1296, 7776, 46656].freeze
+  NINES = [1, 9, 81, 729, 6561, 59049].freeze
+
+  def main
+    @upper_w = gets.chomp.to_i
+
+    @memo = Array.new(@upper_w+1)
+
+    ans = recurse(@upper_w)
+    puts ans
+  end
+
+  def recurse(rest)
+    return rest if rest < 6
+
+    # 既に計算済みの場合はそれを返す
+    return @memo[rest] unless @memo[rest].nil?
+
+    # 6円シリーズのrest内最大金額と9円シリーズのrest内最大金額を試す
+    result = @upper_w
+
+    w = SIXES.select{|i| i <= rest}.max
+    result = [recurse(rest - w) + 1, result].min
+
+    w = NINES.select{|i| i <= rest}.max
+    result = [recurse(rest - w) + 1, result].min
+
+    @memo[rest] = result
+  end
+end
+
 if __FILE__ == $0
   # KnapsackDPSolver.new.main
-  KnapsackDPSolver2.new.main
+  # KnapsackDPSolver2.new.main
+  MemoizeRecursive.new.main
 end
