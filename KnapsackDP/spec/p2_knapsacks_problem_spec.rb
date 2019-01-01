@@ -12,7 +12,9 @@ shared_examples "test_main" do |input, expected|
       ARGF = StringIO.new(input)
     end
     $stdout = StringIO.new
-    Solver.new.main
+    # KnapsackDPSolver.new.main
+    # AllSearchSolver.new.main
+    MemoizeRecursive.new.main
     output = $stdout.string
     # $stdin = stdin_org
     $stdout = stdout_org
@@ -57,14 +59,216 @@ describe "main_test2" do
   EOS_EXPECTED
 end
 
-# describe "main_test3" do
-#   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-# 4 4 6
-#   EOS_INPUT
-# 10
-#   EOS_EXPECTED
-# end
-#
+# ナップサックDPだと15ms
+# 全探索だと200品目でも終わらない
+describe "main_test3" do
+  it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
+200 50
+10 10
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+1 2
+3 1
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+1 2
+3 1
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+1 2
+3 1
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+3 2
+2 1
+6 3
+1 2
+3 1
+85 5
+1 2
+3 1
+  EOS_INPUT
+850
+  EOS_EXPECTED
+end
+
 # describe "main_test4" do
 #   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 # 4 4 12
