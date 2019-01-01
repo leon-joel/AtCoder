@@ -12,9 +12,9 @@ shared_examples "test_main" do |input, expected|
       ARGF = StringIO.new(input)
     end
     $stdout = StringIO.new
-    # KnapsackDPSolver.new.main
+    KnapsackDPSolver.new.main
     # AllSearchSolver.new.main
-    MemoizeRecursive.new.main
+    # MemoizeRecursive.new.main
     output = $stdout.string
     # $stdin = stdin_org
     $stdout = stdout_org

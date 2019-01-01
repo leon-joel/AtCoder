@@ -17,10 +17,11 @@ end
 # https://qiita.com/drken/items/a5e6fe22863b7992efdb
 # http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_B&lang=jp
 
-# ナップサックDP（漸化式）での実装
+# 動的計画法（DP）（＝漸化式＋ループ）での実装
+# ※この実装はDP表を上から埋めていくが、多分下から埋めても同じこと。
+#   https://www.slideshare.net/iwiwi/ss-3578511
 class KnapsackDPSolver
   def main
-
     n, upper_w = gets.split.map(&:to_i)
 
     ks = Array.new(n)
@@ -34,7 +35,6 @@ class KnapsackDPSolver
     # dp[i][w] = v
     # dp[0] : 初期条件
     dp = Array.new(n+1) { Array.new(upper_w+1, 0) }
-    dp[0] = Array.new(upper_w+1, 0)
 
     0.upto(n-1) do |i|
       item = ks[i]
@@ -56,7 +56,7 @@ class KnapsackDPSolver
   end
 end
 
-# メモ化再帰での実装
+# メモ探索（＝再帰関数のメモ化）での実装
 # https://www.slideshare.net/iwiwi/ss-3578511
 class MemoizeRecursive
   def main
