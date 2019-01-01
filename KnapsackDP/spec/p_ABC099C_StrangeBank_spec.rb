@@ -12,7 +12,8 @@ shared_examples "test_main" do |input, expected|
       ARGF = StringIO.new(input)
     end
     $stdout = StringIO.new
-    KnapsackDPSolver.new.main
+    # KnapsackDPSolver.new.main
+    KnapsackDPSolver2.new.main
     # AllSearchSolver.new.main
     # MemoizeRecursive.new.main
     output = $stdout.string
@@ -23,67 +24,77 @@ shared_examples "test_main" do |input, expected|
   end
 end
 
-describe "main_test" do
+describe "main_test1" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 127
   EOS_INPUT
 4
   EOS_EXPECTED
-
+end
+describe "main_test2" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 3
   EOS_INPUT
 3
   EOS_EXPECTED
-
+end
+describe "main_test3" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 44852
   EOS_INPUT
 16
   EOS_EXPECTED
-
+end
+describe "main_test4" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 1
   EOS_INPUT
 1
   EOS_EXPECTED
-
+end
+# describe "main_test5" do
 #   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 # 100000
 #   EOS_INPUT
 # 20
 #   EOS_EXPECTED
-
+# end
+describe "main_test6" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 35
   EOS_INPUT
 6
   EOS_EXPECTED
-
+end
+describe "main_test7" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 36
   EOS_INPUT
 1
   EOS_EXPECTED
-
+end
+describe "main_test8" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 81
   EOS_INPUT
 1
   EOS_EXPECTED
-
+end
+describe "main_test9" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 13122
   EOS_INPUT
 2
   EOS_EXPECTED
-
+end
+describe "main_test10" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 13123
   EOS_INPUT
 3
   EOS_EXPECTED
-
+end
+describe "main_test11" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 93312
   EOS_INPUT
