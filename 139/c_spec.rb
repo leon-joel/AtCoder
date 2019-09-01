@@ -1,6 +1,6 @@
 require 'rspec'
 require 'active_support/core_ext/kernel/reporting'  # to suppress warning
-require_relative "b"
+require_relative "c"
 
 shared_examples "test_main" do |input, expected|
   it do
@@ -21,53 +21,63 @@ shared_examples "test_main" do |input, expected|
   end
 end
 
+describe "main_test0" do
+  it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
+2 5
+4 9
+2 4
+  EOS_INPUT
+12
+  EOS_EXPECTED
+end
+
 describe "main_test1" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-3 4 2
-2 2 k
-1 1 f
+4 30
+6 18
+2 5
+3 10
+7 9
   EOS_INPUT
-f...
-.k..
-....
+130
   EOS_EXPECTED
 end
 
 describe "main_test2" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-1 1 3
-1 1 g
-1 1 b
-1 1 n
+1 100000
+1000000000 100000
   EOS_INPUT
-n
+100000000000000
   EOS_EXPECTED
 end
 
 # describe "main_test3" do
 #   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-# 100000 1 1
+# 9999
 #   EOS_INPUT
-# 49999
-#   EOS_EXPECTED
-# end
-#
-# describe "main_test4" do
-#   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-# 64146 123 456
-#   EOS_INPUT
-# 110
-#   EOS_EXPECTED
-# end
-#
-# describe "main_test5" do
-#   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-# 64145 123 456
-#   EOS_INPUT
-# 109
+# 246
 #   EOS_EXPECTED
 # end
 
+# describe "main_test4" do
+#   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
+# 2
+# a
+# a
+#   EOS_INPUT
+# No
+#   EOS_EXPECTED
+# end
+
+# describe "main_test5" do
+#   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
+# atCoder
+#   EOS_INPUT
+# WA
+#   EOS_EXPECTED
+# end
+#
 # describe "main_test6" do
 #   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
 # AtccodwC

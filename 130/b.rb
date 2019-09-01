@@ -8,21 +8,19 @@ class Solver
   end
 
   def main
-    n, x = gets.split.map(&:to_i)
-    ls = gets.split.map(&:to_i)
+    h, w, q = gets.split.map(&:to_i)
 
-    cnt = 1
-    sum = 0
-    ls.each do |l|
-      sum += l
-      if x < sum
-        break
-      else
-        cnt += 1
-      end
+    g = []
+    h.times do |r|
+      g << "." * w
     end
+    # puts g
 
-    puts cnt
+    q.times do |i|
+      r, c, s = gets.split
+      g[r.to_i - 1][c.to_i - 1] = s
+    end
+    puts g
   end
 end
 
