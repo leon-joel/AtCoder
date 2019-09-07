@@ -1,6 +1,6 @@
 require 'rspec'
 require 'active_support/core_ext/kernel/reporting'  # to suppress warning
-require_relative "c"
+require_relative "d"
 
 shared_examples "test_main" do |input, expected|
   it do
@@ -23,26 +23,23 @@ end
 
 describe "main_test0" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-5
-10 4 8 7 3
-  EOS_INPUT
 2
+  EOS_INPUT
+1
   EOS_EXPECTED
 end
 
 describe "main_test1" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-7
-4 4 5 6 6 5 5
+13
   EOS_INPUT
-3
+78
   EOS_EXPECTED
 end
 
 describe "main_test2" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-4
-1 2 3 4
+1
   EOS_INPUT
 0
   EOS_EXPECTED
@@ -50,10 +47,9 @@ end
 
 describe "main_test3" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-4
-4 3 2 1
+10
   EOS_INPUT
-3
+45
   EOS_EXPECTED
 end
 

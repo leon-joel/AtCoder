@@ -1,6 +1,6 @@
 require 'rspec'
 require 'active_support/core_ext/kernel/reporting'  # to suppress warning
-require_relative "c"
+require_relative "b"
 
 shared_examples "test_main" do |input, expected|
   it do
@@ -21,63 +21,58 @@ shared_examples "test_main" do |input, expected|
   end
 end
 
-describe "main_test0" do
+describe "main_test1" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-5
-10 4 8 7 3
+8 9
   EOS_INPUT
 2
   EOS_EXPECTED
 end
 
-describe "main_test1" do
-  it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-7
-4 4 5 6 6 5 5
-  EOS_INPUT
-3
-  EOS_EXPECTED
-end
-
 describe "main_test2" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-4
-1 2 3 4
+8 8
   EOS_INPUT
-0
+1
   EOS_EXPECTED
 end
 
 describe "main_test3" do
   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-4
-4 3 2 1
-  EOS_INPUT
-3
-  EOS_EXPECTED
-end
-
-describe "main_test4" do
-  it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-1
-1
+2 1
   EOS_INPUT
 0
   EOS_EXPECTED
 end
 
-# describe "main_test5" do
-#   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-# atCoder
-#   EOS_INPUT
-# WA
-#   EOS_EXPECTED
-# end
-#
-# describe "main_test6" do
-#   it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
-# AtccodwC
-#   EOS_INPUT
-# WA
-#   EOS_EXPECTED
-# end
+describe "main_test4" do
+  it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
+4 10
+  EOS_INPUT
+3
+  EOS_EXPECTED
+end
+
+describe "main_test5" do
+  it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
+4 1
+  EOS_INPUT
+0
+  EOS_EXPECTED
+end
+
+describe "main_test6" do
+  it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
+4 7
+  EOS_INPUT
+2
+  EOS_EXPECTED
+end
+
+describe "main_test7" do
+  it_behaves_like "test_main", <<~EOS_INPUT, <<~EOS_EXPECTED
+4 8
+  EOS_INPUT
+3
+  EOS_EXPECTED
+end
