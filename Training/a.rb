@@ -8,12 +8,13 @@ class Solver
   end
 
   def main
-    s = gets.chomp
-
-    if (s[0] == s[1] && s[1] == s[2]) || (s[1] == s[2] && s[2] == s[3])
-      puts "Yes"
+    a, b = gets.chomp.split
+    if a < b
+      puts "<"
+    elsif a == b
+      puts "="
     else
-      puts "No"
+      puts ">"
     end
   end
 end
