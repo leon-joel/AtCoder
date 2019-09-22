@@ -8,14 +8,15 @@ class Solver
   end
 
   def main
-    a, b = gets.chomp.split
-    if a < b
-      puts "<"
-    elsif a == b
-      puts "="
+    s1 = gets.chomp
+    s2 = gets.chomp.reverse
+
+    if s1 == s2
+      puts "YES"
     else
-      puts ">"
+      puts "NO"
     end
+
   end
 end
 
