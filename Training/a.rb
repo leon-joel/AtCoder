@@ -8,15 +8,10 @@ class Solver
   end
 
   def main
-    s1 = gets.chomp
-    s2 = gets.chomp.reverse
+    r = gets.chomp.to_i
+    g = gets.chomp.to_i
 
-    if s1 == s2
-      puts "YES"
-    else
-      puts "NO"
-    end
-
+    puts g + (g - r)
   end
 end
 
