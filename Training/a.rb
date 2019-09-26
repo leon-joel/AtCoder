@@ -9,16 +9,10 @@ class Solver
 
   def main
     n = gets.chomp.to_i
-    k = gets.chomp.to_i
+    a = gets.chomp.to_i
 
-    xs = gets.chomp.split.map(&:to_i)
+    puts n * n - a
 
-    ans = 0
-    xs.each do |x|
-      ans += [x, (x - k).abs].min * 2
-    end
-
-    puts ans
 
   end
 end
