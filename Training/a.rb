@@ -9,11 +9,14 @@ class Solver
 
   def main
     n = gets.chomp.to_i
-    a = gets.chomp.to_i
 
-    puts n * n - a
+    ans = 0
+    n.times do
+      l, r = gets.chomp.split.map(&:to_i)
+      ans += (r - l) + 1
+    end
 
-
+    puts ans
   end
 end
 
