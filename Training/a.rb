@@ -8,15 +8,14 @@ class Solver
   end
 
   def main
-    n = gets.chomp.to_i
+    s = gets.chomp
 
-    ans = 0
-    n.times do
-      l, r = gets.chomp.split.map(&:to_i)
-      ans += (r - l) + 1
+    if s[0] == '9' || s[1] == '9'
+      puts "Yes"
+    else
+      puts "No"
     end
 
-    puts ans
   end
 end
 
