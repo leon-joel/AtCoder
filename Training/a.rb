@@ -8,13 +8,10 @@ class Solver
   end
 
   def main
-    s = gets.chomp
+    x, t = gets.chomp.split.map(&:to_i)
 
-    ans = ""
-
-    s.each_char.with_index do |c, i|
-      ans += c if (i+1).odd?
-    end
+    ans = x - t
+    ans = 0 if ans < 0
 
     puts ans
   end
