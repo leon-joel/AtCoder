@@ -8,11 +8,9 @@ class Solver
   end
 
   def main
-    x, t = gets.chomp.split.map(&:to_i)
+    s = gets.chomp
 
-    ans = x - t
-    ans = 0 if ans < 0
-
+    ans = s[0] + (s.length - 2).to_s + s[-1]
     puts ans
   end
 end
