@@ -8,10 +8,9 @@ class Solver
   end
 
   def main
-    s = gets.chomp
+    n, m = gets.chomp.split.map(&:to_i)
 
-    ans = s[0] + (s.length - 2).to_s + s[-1]
-    puts ans
+    puts "#{(n - 1) * (m - 1)}"
   end
 end
 
