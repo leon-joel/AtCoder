@@ -8,9 +8,17 @@ class Solver
   end
 
   def main
-    n, m = gets.chomp.split.map(&:to_i)
+    n = gets.chomp.to_i
 
-    puts "#{(n - 1) * (m - 1)}"
+    ans = 1
+    loop do
+      v = ans * 2
+      break if n < v
+
+      ans = v
+    end
+
+    puts ans
   end
 end
 
